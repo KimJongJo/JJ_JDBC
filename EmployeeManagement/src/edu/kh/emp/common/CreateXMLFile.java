@@ -11,6 +11,8 @@ public class CreateXMLFile {
 			
 			Scanner sc = new Scanner(System.in);
 			
+			
+			
 			System.out.print("생성할 파일 : ");
 			String fileName = sc.nextLine();
 			

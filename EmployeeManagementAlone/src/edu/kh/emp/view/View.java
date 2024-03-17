@@ -53,7 +53,7 @@ public class View {
 		
 	}
 
-	private void updatePerson() {
+	private void updatePerson() {  
 		// TODO Auto-generated method stub
 		
 	}

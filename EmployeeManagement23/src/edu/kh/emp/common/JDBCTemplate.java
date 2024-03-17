@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.Properties;
 
 public class JDBCTemplate {
-	
 	/* DB 연결 (Connection 생성) , 자동 커밋 off
 	 * 트랜잭션 제어, JDBC 객제 자원 반환(close)
 	 * 
@@ -134,8 +133,6 @@ public class JDBCTemplate {
 			e.printStackTrace();
 		}
 	}
-	
-	
 	
 	
 }

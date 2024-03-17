@@ -313,12 +313,8 @@ public class EmployeeView {
 		
 		Map<String, Integer> map = service.selectDeptTotalSalary();
 		
-		List<String> list = new ArrayList<String>(map.keySet());
-		
-		Collections.sort(list);
-		
-		for(String m : list) {
-			System.out.printf("%s : %d \n",m , map.get(m));
+		for(String s : map.keySet()) {
+			System.out.printf("%s : %d원\n",s, map.get(s));
 		}
 
 	}

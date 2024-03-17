@@ -337,7 +337,7 @@ public class EmployeeDAO {
 	 */
 	public Map<String, Integer> selectDeptTotalSalary(Connection conn) throws Exception{
 		
-		Map<String, Integer> map = new HashMap<String, Integer>();
+		Map<String, Integer> map = new LinkedHashMap<String, Integer>();
 		
 		try {
 			

@@ -5,12 +5,17 @@ import java.util.Scanner;
 
 import edu.kh.jdbc.common.Session;
 import edu.kh.jdbc.main.model.service.MainService;
+import edu.kh.jdbc.member.model.dto.Member;
+import edu.kh.jdbc.member.view.MemberView;
 
 public class MainView {
 	
 	private Scanner sc = new Scanner(System.in);
 	
 	private MainService service = new MainService();
+	
+	// 회원 기능 화면 객체 생성
+	private MemberView memberView = new MemberView();
 	
 	/**
 	 * 메인 메뉴 출력 View
@@ -35,8 +40,8 @@ public class MainView {
 					sc.nextLine();	// 입력 버퍼 개행 문자 제거
 					
 					switch(input) {
-//					case 1 : login(); break;
-//					case 2 : signUp(); break;
+					case 1 : login(); break;
+					case 2 : signUp(); break;
 					case 0 : System.out.println("\n----프로그램 종료...----\n"); break;
 					default : System.out.println("\n====메뉴 번호만 입력해주세요====\n");
 					}
@@ -55,7 +60,7 @@ public class MainView {
 					sc.nextLine();
 					
 					switch(input) {
-					case 1 : break; // 회원기능 view
+					case 1 : memberView.memberMenu(); break;
 					case 2 : break; // 게시판 기능 view
 					case 3 : System.out.println("\n=== 로그아웃 되었습니다 ===\n");
 							 Session.loginMember = null;
@@ -73,11 +78,143 @@ public class MainView {
 				System.out.println("\n*** 입력 형식이 올바르지 않습니다 ***\n");
 				sc.nextLine(); // 입력 버퍼에 잘못된 문자열 제거
 				input = -1; // while문 종료 방지
+			} catch(Exception e) {
+				e.printStackTrace();
 			}
 			
 		} while(input != 0);
 		
 		
 	}
+	
+	/** 로그인 기능
+	 * @throws Exception
+	 */
+	private void login() throws Exception{
+		System.out.println("\n====== 로그인 ======\n");
+		
+		System.out.print("아이디 : ");
+		String memberId = sc.next();
+		System.out.print("비밀번호 : ");
+		String memberPw = sc.next();
+		
+		Member member = service.login(memberId, memberPw);
+		
+		if(member == null) {
+			System.out.println("\n *** 로그인 실패 !!! ***");
+		}else {
+			System.out.println("\n*** 로그인 성공 ***\n");
+			Session.loginMember = member;
+		}
+		
+		
+		
+		
+	}
+
+	/**
+	 * 회원 가입
+	 */
+	public void signUp() {
+		
+		//아이디, 비밀번호, 비밀번호 확인, 이름, 성별(M/F)을 저장할 변수 선언
+		String memberId = null;
+		String memberPw = null;
+		String pwConfirm = null; // 비밀번호 확인용변수
+		String memberName = null;
+		String memberGender = null;
+		
+		try {
+			// 아이디 입력
+			// - DB에 탈퇴하지 않은 회원 중
+			//	 입력한 아이디와 같은 아이디가 존재하면 중복으로 판정
+			// -> 중복이 입력되지 않을 때 까지 무한 반복
+			
+			while(true) {
+				
+				
+				System.out.print("아이디 입력 : ");
+				memberId = sc.next();
+				
+				// 아이디 중복 확인 서비스 호출
+				// -> 중복인 경우 1, 아닌 경우 0 반환
+				int resultId = service.idDuplicationCheck(memberId);
+
+				if(resultId == 0) {
+					System.out.println("\n=== 사용 가능한 아이디 입니다 ===\n");
+					break;
+				}else {
+					System.out.println("\n*** 이미 사용중인 아이디 입니다 ***\n");
+				}
+				
+				
+			}
+			
+			// 비밀번호, 비밀번호 확인 입력을 받아서 같을 때 까지 무한 반복
+			while(true) {
+				System.out.print("비밀번호 입력 : ");
+				memberPw = sc.next();
+				
+				System.out.print("비밀번호 확인 : ");		
+				pwConfirm = sc.next();
+				
+				if(memberPw.equals(pwConfirm)) {
+					System.out.println("\n=== 비밀번호 일치 ===\n");
+					break;
+				}else {
+					System.out.println("\n*** 비밀번호가 일치하지 않습니다 ***\n");
+				}
+			}
+			
+			// 이름 입력
+			System.out.print("이름 : ");
+			memberName = sc.next();
+			
+			// 성별 입력
+			// M 또는 F가 입력될 때 까지 무한 반복
+			while(true) {
+				System.out.print("성별(M/F) : ");
+				memberGender = sc.next().toUpperCase();
+				
+				// 정상 입력
+				if(memberGender.equals("M") || memberGender.equals("F")) {
+					break;
+				} else {
+					System.out.println("\n*** M또는 F만 입력해주세요 ***\n");
+				}
+			}
+			
+			// Member 객체를 생성하여 입력 받은 값 세팅
+			Member member = new Member();
+			
+			member.setMemberId(memberId);
+			member.setMemberPw(memberPw);
+			member.setMemberName(memberName);
+			member.setMemberGender(memberGender);
+			
+			// 회원 가입 서비스 호출
+			int result = service.signUp(member);
+			
+			if(result > 0) {
+				System.out.println("\n=== 회원 가입 성공 ===\n");
+			}else {
+				System.out.println("\n*** 회원 가입 실패 ***\n");
+			}
+			
+			
+			
+		} catch(Exception e) {
+			System.out.println("\n *** 회원 가입 중 예외 발생 *** \n");
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 }

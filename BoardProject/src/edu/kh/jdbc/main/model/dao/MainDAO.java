@@ -75,7 +75,7 @@ public class MainDAO {
 	 */
 	public Member login(String memberId, String memberPw, Connection conn) throws Exception{
 		
-		Member member = new Member();
+		Member member = null;
 		
 		try {
 			
@@ -89,8 +89,11 @@ public class MainDAO {
 			
 			rs = pstmt.executeQuery();
 			
-			while(rs.next()) {
+			if(rs.next()) {
 				
+				member = new Member();
+				
+				member.setMemberPw(memberPw);
 				member.setMemberNo(rs.getInt("MEMBER_NO"));
 				member.setMemberId(rs.getString("MEMBER_ID"));
 				member.setMemberName(rs.getString("MEMBER_NM"));

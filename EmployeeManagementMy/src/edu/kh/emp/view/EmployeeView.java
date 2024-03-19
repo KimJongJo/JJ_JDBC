@@ -32,11 +32,11 @@ public class EmployeeView {
 				
 				
 				switch(input) {
-					case 1 : service.selectAll(); break;
-					case 2 : service.addPerson(); break;
-					case 3 : service.updatePerson(); break;
-					case 4 : service.deletePerson(); break;
-					case 5 : service.selectSearch(); break;
+//					case 1 : service.selectAll(); break;
+//					case 2 : service.addPerson(); break;
+//					case 3 : service.updatePerson(); break;
+//					case 4 : service.deletePerson(); break;
+//					case 5 : service.selectSearch(); break;
 				default : System.out.println("번호 입력이 오류");
 				}
 			}catch(Exception e) {

@@ -102,6 +102,9 @@ public class MemberView {
 	*/
 	 
 	
+	/**
+	 * 비밀번호 변경(현재 비밀번호, 새 비밀번호, 새 비밀번호 확인
+	 */
 	public void updatePassword() {
 		System.out.println("\n==== 비밀번호 변경 ====\n");
 		System.out.print("현재 비밀번호 : ");

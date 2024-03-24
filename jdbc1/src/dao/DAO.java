@@ -27,16 +27,17 @@ public class DAO {
 			prop = new Properties();
 			prop.loadFromXML(new FileInputStream("main-sql.xml"));
 			
+			
+			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 		
 	}
-	
 
-	public List<Member> selectAll(Connection conn) throws Exception{
+	public List<Member> selectAll(Connection conn) {
 		
-		List<Member> list = new ArrayList<Member>();
+		List<Member> memberList = new ArrayList<Member>();
 		
 		try {
 			
@@ -49,47 +50,25 @@ public class DAO {
 			while(rs.next()) {
 				
 				Member member = new Member();
-
 				
 				member.setMemberNo(rs.getInt(1));
 				member.setMemberId(rs.getString(2));
 				member.setMemberPw(rs.getString(3));
 				member.setMemberName(rs.getString(4));
 				
-				list.add(member);
+				memberList.add(member);
 				
 			}
 			
+			
+		}catch(Exception e) {
+			e.printStackTrace();
 		}finally {
 			close(rs);
 			close(stmt);
 		}
-
-		return list;
-	}
-
-
-	public int updatePassword(Connection conn, int input, String pw) throws Exception{
 		
-		int result = 0;
-		
-		try {
-			
-			String sql = prop.getProperty("updatePassword");
-			
-			pstmt = conn.prepareStatement(sql);
-			
-			pstmt.setString(1, pw);
-			pstmt.setInt(2, input);
-			
-			result = pstmt.executeUpdate();
-			
-		}finally {
-			close(pstmt);
-		}
-		return result;
+		return memberList;
 	}
-
-	
 	
 }

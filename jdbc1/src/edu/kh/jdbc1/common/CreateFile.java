@@ -8,27 +8,26 @@ public class CreateFile {
 	
 	public static void main(String[] args) {
 		
+		Scanner sc = new Scanner(System.in);
 		
 		try {
 			
-			Scanner sc = new Scanner(System.in);
+			System.out.print("생성하실 파일 이름 입력 : ");
+			String filename = sc.nextLine();
 			
 			Properties prop = new Properties();
 			
-			System.out.print("생성할 파일 이름 : ");
-			String fileName = sc.nextLine();
+			FileOutputStream fos = new FileOutputStream(filename + ".xml");
 			
-			FileOutputStream fos = new FileOutputStream(fileName + ".xml");
+			prop.storeToXML(fos, filename + ".xml test");
 			
-			prop.storeToXML(fos, fileName + ".xml file!!");
+			System.out.println("파일 생성 완료");
 			
-			System.out.println("파일 생성 완료!!");
 			
 		}catch(Exception e) {
-			System.out.println("파일 생성중 에러 발생");
 			e.printStackTrace();
 		}
-		
+			
 	}
 	
 }

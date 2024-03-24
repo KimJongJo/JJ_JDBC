@@ -9,8 +9,9 @@ import service.Service;
 
 public class View {
 
-	private Service service = new Service();
 	private Scanner sc = new Scanner(System.in);
+	
+	private Service service = new Service();
 	
 	public void mainView() throws Exception{
 		
@@ -33,38 +34,20 @@ public class View {
 	
 	
 	public void selectAll() throws Exception{
+
+		List<Member> memberList = service.selectAll();
 		
-		List<Member> list = service.selectAll();
-		
-		if(!list.isEmpty()) {
-			for(Member m : list) {
-				System.out.printf("%d\t%s\t%s\t%s \n",
-						m.getMemberNo(), m.getMemberId(),m.getMemberPw(), m.getMemberName());
-			}
+		for(Member member : memberList) {
+			System.out.printf("%d\t%s\t%s\t%s\n",
+					member.getMemberNo(), member.getMemberId(),member.getMemberPw(),member.getMemberName());
 		}
+		
 		
 	}
 	
 	
 	public void updatePassword() throws Exception{
-		
-		System.out.print("비밀번호를 변경할 MEMBER 번호 입력 : ");
-		int input = sc.nextInt();
-		sc.nextLine();
-		System.out.print("변경하실 비밀번호 입력 : ");
-		String pw = sc.nextLine();
-		
-		int result = service.updatePassword(input, pw);
-		
-		if(result > 0) {
-			System.out.println("비밀번호 변경 완료");
-		}
-		else {
-			System.out.println("비밀번호 변경 오류");
-		}
-		
-		selectAll();
-		
+
 	}
 	
 	

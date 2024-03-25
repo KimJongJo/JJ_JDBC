@@ -49,7 +49,7 @@ public class MemberDAO {
 				Member member = new Member();
 				
 				// 컬럼 값을 Member 객체에 저장
-				member.setMemberId(rs.getString("MEMBER_ID"));
+				member.setMemberId(rs.getString("MEMBER_ID" ));
 				member.setMemberName(rs.getString("MEMBER_NM"));
 				member.setMemberGender(rs.getString("성별"));
 				

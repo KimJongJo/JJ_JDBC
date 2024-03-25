@@ -46,8 +46,28 @@ public class View {
 	}
 	
 	
+	/** 비밀번호 수정
+	 * @throws Exception
+	 */
 	public void updatePassword() throws Exception{
-
+		
+		System.out.print("변경할 memberNo 입력 : ");
+		int input = sc.nextInt();
+		sc.nextLine();
+		
+		System.out.print("새 비밀번호 입력 : ");
+		String password = sc.nextLine();
+		
+		int result = service.updatePassword(input, password);
+		
+		if(result > 0) {
+			System.out.println("비밀번호가 변경되었습니다.");
+		}else {
+			System.out.println("비밀번호 변경 오류");
+		}
+		
+		selectAll();
+		
 	}
 	
 	

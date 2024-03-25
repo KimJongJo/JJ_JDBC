@@ -15,7 +15,7 @@ public class JDBCTemplate {
 	public static Connection getConnection() {
 		
 		try {
-
+			
 			if(conn == null || conn.isClosed()) {
 				
 				Properties prop = new Properties();
@@ -32,11 +32,11 @@ public class JDBCTemplate {
 				conn = DriverManager.getConnection(url, user, password);
 				
 				conn.setAutoCommit(false);
+				
 			}
 			
-			
 		}catch(Exception e) {
-			System.out.println("Connection 생성 중 오류 발생");
+			System.out.println("커넥션 생성 중 오류 발생");
 			e.printStackTrace();
 		}
 		

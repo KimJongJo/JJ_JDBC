@@ -22,6 +22,20 @@ public class Service {
 		
 		return memberList;
 	}
+
+	public int updatePassword(int input, String password) {
+		
+		Connection conn = getConnection();
+		
+		int result = dao.updatePassword(conn, input, password);
+		
+		if(result > 0) commit(conn);
+		else rollback(conn);
+		
+		close(conn);
+		
+		return result;
+	}
 	
 	
 	

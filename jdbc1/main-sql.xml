@@ -7,5 +7,11 @@
 		SELECT MEMBER_NO, MEMBER_ID, MEMBER_PW, MEMBER_NM
 		FROM MEMBER2
 	</entry>
+	
+	<entry key="updatePassword">
+		UPDATE MEMBER2 SET
+		MEMBER_PW = ?
+		WHERE MEMBER_NO = ?
+	</entry>
 
 </properties>
